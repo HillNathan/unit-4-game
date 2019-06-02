@@ -29,6 +29,7 @@ img.game-pic {
 
 .card {
     border: solid 3px black;
+    position:relative;
 }
 
 .stats {
