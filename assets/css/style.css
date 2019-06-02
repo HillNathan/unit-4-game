@@ -2,3 +2,40 @@ body {
     background-image: url("../images/matthew-t-rader-1584856-unsplash-scaled.jpg");
     /* Photo by Matthew T Rader on Unsplash */
 }
+
+.header {
+    width: 50%;
+    margin: auto;
+    background: rgb(234,235,236,.5);
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+#instructions {
+    background-color: black;
+    color: #eeeeee;
+    padding: 10px;
+    font: 14pt;
+    font-weight: 600;   
+    
+}
+
+img.game-pic {
+    width:125px;
+    height: 125px;
+    border-bottom: solid 3px black;
+    padding: 5px
+}
+
+.card {
+    border: solid 3px black;
+}
+
+.stats {
+    text-align: right;
+}
+
+h5 {
+    text-align: center;
+    font-weight: 600;
+}

@@ -6,17 +6,76 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Animal RPG Game</title>
 
-    <!-- Reset and my own stylesheets for this project -->
-    <link rel="stylesheet" href="assets/css/reset.css">
+    <!-- Bootstrap CDN and my own stylesheets for this project -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" 
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="assets/css/style.css">
 
-    <!-- Linking in jQuery right here -->
+    <!-- Linking in jQuery CDN right here -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 
 </head>
 <body>
-        
-    
+    <!-- Page HEader, using my own css class -->
+        <div class="header">
+            <h1>Animal RPG Game</h1>
+        </div>
+
+    <!-- body of the page, using primarily Bootstrap code  -->
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <span id="instructions">Please start by selecting your character:</span>
+            </div>
+        </div>
+        <div class="row pt-2">
+            <div id="lineup" class="col-12">
+                <div class="card m-2 float-left">
+                    <img src="assets/images/tiger.png" class="game-pic" alt="tiger">
+                    <div class="card-body p-1">
+                        <h5>Tiger</h5>
+                        <P class="stats mb-0">
+                            <span class="stats" id="tiger-stats">125 HP</span>
+                        </P>
+                    </div>
+                </div>
+
+                <div class="card m-2 float-left">
+                    <img src="assets/images/fox.png" class="game-pic" alt="fox">
+                    <div class="card-body p-1">
+                        <h5>Fox</h5>
+                        <P class="stats mb-0">
+                            <span class="stats" id="fox-stats">125 HP</span>
+                        </P>
+                    </div>
+                </div>
+
+                <div class="card m-2 float-left">
+                    <img src="assets/images/lion.gif" class="game-pic" alt="lion">
+                    <div class="card-body p-1">
+                        <h5>Lion</h5>
+                        <P class="stats mb-0">
+                            <span id="lion-stats">150 HP</span>
+                        </P>
+                    </div>
+                </div>
+
+                <div class="card m-2 float-left">
+                    <img src="assets/images/bear.png" class="game-pic" alt="bear">
+                    <div class="card-body p-1">
+                        <h5>Bear</h5>
+                        <P class="stats mb-0">
+                            <span id="bear-stats">150 HP</span>
+                        </P>
+                    </div>
+                </div>                        
+                    
+                </div>
+            </div>
+        </div>
+
+
+    </div>
 </body>
 </html>
