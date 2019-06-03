@@ -49,3 +49,29 @@ h5 {
 .bumper {
     height: 100px;
 }
+
+.clash {
+    margin: auto;
+    display: none;
+}
+
+#fight {
+    font-size: 20pt;
+}
+
+#congrats {
+    background-color: teal;
+    width:100%;
+    text-align:center;
+    margin: auto;
+    display:none;
+}
+
+
+#loser {
+    background-color: teal;
+    width:100%;
+    text-align:center;
+    margin: auto;
+    display:none;
+}
