@@ -67,11 +67,15 @@ h5 {
     display:none;
 }
 
-
 #loser {
     background-color: teal;
     width:100%;
     text-align:center;
     margin: auto;
     display:none;
+}
+
+button.result{
+    background-color: teal;
+    border:none;
 }

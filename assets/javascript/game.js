@@ -1,25 +1,25 @@
 var theLion = {
-    hitPoints: 150,
-    attack: 8,
-    counterAttack: 5,
+    hitPoints: 160,
+    attack: 18,
+    counterAttack: 21,
 };
 
 var theTiger = {
-    hitPoints: 125,
-    attack: 8,
-    counterAttack: 8,
+    hitPoints: 170,
+    attack: 19,
+    counterAttack: 21,
 };
 
 var theBear = {
-    hitPoints: 150,
-    attack: 8,
-    counterAttack: 6,
+    hitPoints: 160,
+    attack: 20,
+    counterAttack: 22,
 };
 
 var theFox = {
-    hitPoints: 125,
-    attack: 8,
-    counterAttack: 4,
+    hitPoints: 165,
+    attack: 17,
+    counterAttack: 19,
 };
 
 var player1 = {
@@ -147,7 +147,11 @@ $(document).ready(function() {
         player1.attack = player1.attack + player1.initialAttack
         enemy.hitPoints = enemy.hitPoints - player1.attack;
         player1.hitPoints = player1.hitPoints - enemy.counterAttack;
-        if(enemy.hitPoints < 1) {
+        if(player1.hitPoints <1){
+            player1.hitPoints = 0;
+            $(".clash").toggle();
+            $("#loser").toggle();
+        } else if(enemy.hitPoints < 1) {
             enemy.hitPoints = 0;
             player1.numwins++
             if (player1.numwins == 3) {
