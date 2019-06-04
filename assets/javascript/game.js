@@ -42,6 +42,7 @@ var stage = "initial";
 
 $(document).ready(function() {
 
+    var instructions = $("#instructions");
     var lionHP = $("#lion-stats");
     var tigerHP = $("#tiger-stats");
     var foxHP = $("#fox-stats");
@@ -57,6 +58,7 @@ $(document).ready(function() {
     $("#lion-card").on("click", function() {
         if (stage == "initial") {
             stage = "enemy-pick";
+            instructions.text("Now select your opponent by clicking on an animal.");
             $("#lion-card").remove();
             $("#user-battle").append($("<div>").attr("class", "card m-2 float-left").attr("id", "player1").html("<img src='assets/images/lion.gif' class='game-pic' alt='lion'><div class='card-body p-1'><h5>Lion</h5><P class='stats mb-0'><span id='player1-stats'></span> HP</P>" ));
             player1.hitPoints = theLion.hitPoints;
@@ -66,6 +68,7 @@ $(document).ready(function() {
         }
         else if (stage == "enemy-pick") {
             stage = "clash";
+            instructions.text("Click the red 'FIGHT' button until you or your opponent's Hit Points are reduced to 0");
             $("#lion-card").remove();
             $("#opp-battle").append($("<div>").attr("class", "card m-2 float-right").attr("id", "enemy").html("<img src='assets/images/lion.gif' class='game-pic' alt='lion'><div class='card-body p-1'><h5>Lion</h5><P class='stats mb-0'><span id='enemy-stats'></span> HP</P>" ));
             enemy.hitPoints = theLion.hitPoints;
@@ -79,6 +82,7 @@ $(document).ready(function() {
     $("#fox-card").on("click", function() {
         if (stage == "initial") {
             stage = "enemy-pick";
+            instructions.text("Now select your opponent by clicking on an animal.");
             $("#fox-card").remove();
             $("#user-battle").append($("<div>").attr("class", "card m-2 float-left").attr("id", "player1").html("<img src='assets/images/fox.png' class='game-pic' alt='fox'><div class='card-body p-1'><h5>Fox</h5><P class='stats mb-0'><span id='player1-stats'></span> HP</P>" ));
             player1.hitPoints = theFox.hitPoints;
@@ -88,6 +92,7 @@ $(document).ready(function() {
         } 
         else if (stage == "enemy-pick") {
             stage = "clash";
+            instructions.text("Click the red 'FIGHT' button until you or your opponent's Hit Points are reduced to 0");
             $("#fox-card").remove();
             $("#opp-battle").append($("<div>").attr("class", "card m-2 float-right").attr("id", "enemy").html("<img src='assets/images/fox.png' class='game-pic' alt='fox'><div class='card-body p-1'><h5>Fox</h5><P class='stats mb-0'><span id='enemy-stats'></span> HP</P>" ));
             enemy.hitPoints = theFox.hitPoints;
@@ -101,6 +106,7 @@ $(document).ready(function() {
     $("#tiger-card").on("click", function() {
         if (stage == "initial") {
             stage = "enemy-pick";
+            instructions.text("Now select your opponent by clicking on an animal.");
             $("#tiger-card").remove();
             $("#user-battle").append($("<div>").attr("class", "card m-2 float-left").attr("id", "player1").html("<img src='assets/images/tiger.png' class='game-pic' alt='lion'><div class='card-body p-1'><h5>Tiger</h5><P class='stats mb-0'><span id='player1-stats'></span> HP</P>" ));
             player1.hitPoints = theTiger.hitPoints;
@@ -110,6 +116,7 @@ $(document).ready(function() {
         }
         else if (stage == "enemy-pick") {
             stage = "clash";
+            instructions.text("Click the red 'FIGHT' button until you or your opponent's Hit Points are reduced to 0");
             $("#tiger-card").remove();
             $("#opp-battle").append($("<div>").attr("class", "card m-2 float-right").attr("id", "enemy").html("<img src='assets/images/tiger.png' class='game-pic' alt='lion'><div class='card-body p-1'><h5>Tiger</h5><P class='stats mb-0'><span id='enemy-stats'></span> HP</P>" ));
             enemy.hitPoints = theTiger.hitPoints;
@@ -123,6 +130,7 @@ $(document).ready(function() {
     $("#bear-card").on("click", function() {
         if (stage == "initial") {
             stage = "enemy-pick";
+            instructions.text("Now select your opponent by clicking on an animal.");
             $("#bear-card").remove();
             $("#user-battle").append($("<div>").attr("class", "card m-2 float-left").attr("id", "player1").html("<img src='assets/images/bear.png' class='game-pic' alt='bear'><div class='card-body p-1'><h5>Bear</h5><P class='stats mb-0'><span id='player1-stats'></span> HP</P>" ));
             player1.hitPoints = theBear.hitPoints;
@@ -132,6 +140,7 @@ $(document).ready(function() {
         }
         else if (stage == "enemy-pick") {
             stage = "clash";
+            instructions.text("Click the red 'FIGHT' button until you or your opponent's Hit Points are reduced to 0");
             $("#bear-card").remove();
             $("#opp-battle").append($("<div>").attr("class", "card m-2 float-right").attr("id", "enemy").html("<img src='assets/images/bear.png' class='game-pic' alt='bear'><div class='card-body p-1'><h5>Bear</h5><P class='stats mb-0'><span id='enemy-stats'></span> HP</P>" ));
             enemy.hitPoints = theBear.hitPoints;
@@ -149,6 +158,9 @@ $(document).ready(function() {
         player1.hitPoints = player1.hitPoints - enemy.counterAttack;
         if(player1.hitPoints <1){
             player1.hitPoints = 0;
+            if(enemy.hitPoints < 1) {
+                enemy.hitPoints = 0; }
+            instructions.text("");
             $(".clash").toggle();
             $("#loser").toggle();
         } else if(enemy.hitPoints < 1) {
@@ -157,9 +169,11 @@ $(document).ready(function() {
             if (player1.numwins == 3) {
                 stage="game-over";
                 $(".clash").toggle();
+                instructions.text("");
                 $("#congrats").toggle();
             } else {
                 stage = "enemy-pick";
+                instructions.text("Now select your opponent by clicking on an animal.");
                 $(".clash").toggle();
                 $("#enemy").remove();
             }
