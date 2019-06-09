@@ -33,10 +33,12 @@ img.game-pic {
 .card {
     border: solid 3px black;
     position:relative;
+    box-shadow: 5px 10px 8px #333333;
 }
 
 .stats {
     text-align: right;
+    font-weight: 700;
 }
 
 h5 {
@@ -61,23 +63,29 @@ h5 {
     font-size: 20pt;
 }
 
-#congrats {
-    background-color: teal;
+.gameover {
     width:100%;
     text-align:center;
     margin: auto;
     display:none;
 }
 
-#loser {
-    background-color: teal;
-    width:100%;
-    text-align:center;
-    margin: auto;
-    display:none;
-}
-
-button.result{
-    background-color: teal;
+button.result {
     border:none;
+}
+
+.game-stats {
+    background-image: url("../images/notepad2.png");
+    background-repeat: no-repeat;
+    font-family: 'Permanent Marker', cursive;
+    width: 50px;
+    color: navy;
+    font-weight: 700;
+    font-size: 16pt;
+    height: 265px;
+    width: 240px;
+}
+
+.record {
+    padding-left: 40px;
 }

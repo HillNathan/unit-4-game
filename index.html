@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" 
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="assets/css/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Permanent+Marker&display=swap" rel="stylesheet">
 
     <!-- Linking in jQuery CDN right here -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -18,80 +19,93 @@
 
 </head>
 <body>
-    <!-- Page HEader, using my own css class -->
+    <!-- Page Header, using my own css class -->
         <div class="header">
             <h1>Animal RPG Game</h1>
         </div>
 
     <!-- body of the page, using primarily Bootstrap code  -->
     <div class="container">
-        <div class="row justify-content-left">
-            <div class="col-9">
-                <div id="instructions">Please start by selecting your character:</div>
+        <div class="row justify-content-between">
+            <div class="col-8 m-1">
+                <div class="row">
+                    <!-- this div holds instructions for the game, and changes as the game progresses-->
+                    <div id="instructions">Please start by selecting your character:</div>
+                </div>
+                <div class="row pt-2 nate">
+                    <div id="lineup" class="col">
+                    <!-- setting the initial stage of the game.  -->
+                        <div class="card m-2 float-left" id="tiger-card">
+                            <img src="assets/images/tiger.png" class="game-pic" alt="tiger">
+                            <div class="card-body p-1">
+                                <h5>Tiger</h5>
+                                <P class="stats mb-0">
+                                    <span class="stats" id="tiger-stats"></span> HP
+                                </P>
+                            </div>
+                        </div>
+        
+                        <div class="card m-2 float-left" id="fox-card">
+                            <img src="assets/images/fox.png" class="game-pic" alt="fox">
+                            <div class="card-body p-1">
+                                <h5>Fox</h5>
+                                <P class="stats mb-0">
+                                    <span class="stats" id="fox-stats"></span> HP
+                                </P>
+                            </div>
+                        </div>
+        
+                        <div class="card m-2 float-left" id="lion-card">
+                            <img src="assets/images/lion.gif" class="game-pic" alt="lion">
+                            <div class="card-body p-1">
+                                <h5>Lion</h5>
+                                <P class="stats mb-0">
+                                    <span class="stats" id="lion-stats"></span> HP
+                                </P>
+                            </div>
+                        </div>
+        
+                        <div class="card m-2 float-left" id="bear-card">
+                            <img src="assets/images/bear.png" class="game-pic" alt="bear">
+                            <div class="card-body p-1">
+                                <h5>Bear</h5>
+                                <P class="stats mb-0">
+                                    <span id="bear-stats"></span> HP
+                                </P>
+                            </div>
+                        </div>                               
+                </div>
+            
             </div>
         </div>
-        <div class="row pt-2 nate">
-            <div id="lineup" class="col-12">
-                <div class="card m-2 float-left" id="tiger-card">
-                    <img src="assets/images/tiger.png" class="game-pic" alt="tiger">
-                    <div class="card-body p-1">
-                        <h5>Tiger</h5>
-                        <P class="stats mb-0">
-                            <span class="stats" id="tiger-stats"></span> HP
-                        </P>
-                    </div>
-                </div>
-
-                <div class="card m-2 float-left" id="fox-card">
-                    <img src="assets/images/fox.png" class="game-pic" alt="fox">
-                    <div class="card-body p-1">
-                        <h5>Fox</h5>
-                        <P class="stats mb-0">
-                            <span class="stats" id="fox-stats"></span> HP
-                        </P>
-                    </div>
-                </div>
-
-                <div class="card m-2 float-left" id="lion-card">
-                    <img src="assets/images/lion.gif" class="game-pic" alt="lion">
-                    <div class="card-body p-1">
-                        <h5>Lion</h5>
-                        <P class="stats mb-0">
-                            <span id="lion-stats"></span> HP
-                        </P>
-                    </div>
-                </div>
-
-                <div class="card m-2 float-left" id="bear-card">
-                    <img src="assets/images/bear.png" class="game-pic" alt="bear">
-                    <div class="card-body p-1">
-                        <h5>Bear</h5>
-                        <P class="stats mb-0">
-                            <span id="bear-stats"></span> HP
-                        </P>
-                    </div>
-                </div>                        
-                    
+            <div class="col-3 game-stats m-1 ">
+                <br><br>
+                <p class="record">
+                    Wins: <span class="game-wins"></span>
+                </p>
+                <p class="record">
+                    Losses: <span class="game-losses"></span>
+                </p>
             </div>
         </div>
     
         
         <div class="row bumper">
-            <!-- Empty row for spacing purposes -->
+            <!-- This row will display the "Fight" button, as well as the buttons for the win and lose conditions -->
             <div class="clash">
                 <button class="btn btn-danger btn-lg" id="fight">FIGHT!!!</button>
             </div>
-            <div id="congrats">
-                <button class="result"><h1>You won!!! Click here to play again!</h1></button>
+            <div class="gameover" id="congrats">
+                <button class="btn btn-lg btn-success restart"><h1>You won!!! Click here to play again!</h1></button>
             </div>
-            <div id="loser">
-                <button class="result"><h1>You lose. :-( Click here to play again.</h1></button>
+            <div class="gameover" id="loser">
+                <button class="btn btn-lg btn-warning restart"><h1>You lose. :-( Click here to play again.</h1></button>
             </div>
         </div>
 
         <div class="row justify-between">
+            <!-- empty divs to hold the user's animal and the enemy animal-->
             <div class="col" id="user-battle">
-
             </div>
             <div class="col" id="opp-battle">
             </div>
