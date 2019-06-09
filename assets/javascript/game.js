@@ -145,7 +145,7 @@ $(document).ready(function() {
     var loseMsg = $("#loser");
     var oppDiv = $("#opp-battle");
     var playerDiv = $("#user-battle");
-    var lineupDiv = $("#lineup");
+    var powImg = $("#pow");
     // here are variables to show the hit points of the two characters that are fighting right now
     var playerHP = "";
     var enemyHP = "";
@@ -328,57 +328,93 @@ $(document).ready(function() {
 
     // Click event listener for the "fight" button
     fightButton.click(function() {
+        //play the fight animation
+        fightAnimations()
         // Player does damage to the enemy
-        player1.attack = player1.attack + player1.initialAttack
-        // Enemy does damage to the player
-        enemy.hitPoints = enemy.hitPoints - player1.attack;
-        // Increase the player's attack by the base attack
-        player1.hitPoints = player1.hitPoints - enemy.counterAttack;
-        // Check to see if the player is dead
-        if(player1.hitPoints <1){
-            player1.hitPoints = 0;
-            if(enemy.hitPoints < 1) {
-                enemy.hitPoints = 0; }
-            // Hide the instructions section and fight button
-            player1.gameLosses++;
-            player1.displayLosses.text(player1.gameLosses);
-            instructions.toggle();
-            fightButton.toggle();
-            // show the button for the lose condition
-            loseMsg.toggle();
-        // If the player is NOT dead, check to see if the enemy is dead. 
-        } else if(enemy.hitPoints < 1) {
-            // if the enemy s dead, mark a win 
-            enemy.hitPoints = 0;
-            player1.numwins++
-            // check to see if we have defeated all of the enemies
-            if (player1.numwins == 3) {
-                // if we have won, close out the listening events and display button for the win-condition 
-                player1.gameWins++;
-                player1.displayWins.text(player1.gameWins);
-                stage="game-over";
-                fightButton.toggle();
+
+            player1.attack = player1.attack + player1.initialAttack
+            // Enemy does damage to the player
+            enemy.hitPoints = enemy.hitPoints - player1.attack;
+            // Increase the player's attack by the base attack
+            player1.hitPoints = player1.hitPoints - enemy.counterAttack;
+
+    animationsTest(function () { // <-- this will run once all the above animations are finished
+            // Check to see if the player is dead
+            if(player1.hitPoints <1){
+                player1.hitPoints = 0;
+                if(enemy.hitPoints < 1) {
+                    enemy.hitPoints = 0; }
+                // Hide the instructions section and fight button
+                player1.gameLosses++;
+                player1.displayLosses.text(player1.gameLosses);
                 instructions.toggle();
-                winMsg.toggle();
-            } else {
-                // if we have not defeated all of the enemies, go back to the selection stage to pick the next
-                // enemy to fight
-                stage = "enemy-pick";
-                instructions.text("Now select your opponent by clicking on an animal.");
                 fightButton.toggle();
-                $("#enemy").remove();
-            }
-         }   
-         // If there is no winner or loser, update the hit Points for the player and the enemy and stay in the 
-         // fight phase so that the fight button can be clicked again.
-        playerHP.text(player1.hitPoints);
-        enemyHP.text(enemy.hitPoints);
+                // show the button for the lose condition
+                loseMsg.toggle();
+            // If the player is NOT dead, check to see if the enemy is dead. 
+            } else if(enemy.hitPoints < 1) {
+                // if the enemy s dead, mark a win 
+                enemy.hitPoints = 0;
+                player1.numwins++
+                // check to see if we have defeated all of the enemies
+                if (player1.numwins == 3) {
+                    // if we have won, close out the listening events and display button for the win-condition 
+                    player1.gameWins++;
+                    player1.displayWins.text(player1.gameWins);
+                    stage="game-over";
+                    fightButton.toggle();
+                    instructions.toggle();
+                    winMsg.toggle();
+                } else {
+                    // if we have not defeated all of the enemies, go back to the selection stage to pick the next
+                    // enemy to fight
+                    stage = "enemy-pick";
+                    instructions.text("Now select your opponent by clicking on an animal.");
+                    fightButton.toggle();
+                    $("#enemy").remove();
+                }
+            }   
+            // If there is no winner or loser, update the hit Points for the player and the enemy and stay in the 
+            // fight phase so that the fight button can be clicked again.
+            playerHP.text(player1.hitPoints);
+            enemyHP.text(enemy.hitPoints);
     });
 
+    }); 
     // restarts the game by reloading the page. This should probably be done a different way, but I will leave this 
     // here for now until I can get that to work. 
     $(".restart").click(function() {
         restartGame();
         // location.reload();
     });
+
+    function fightAnimations(){
+        playerDiv.animate({left: '40%'},
+            {easing: "swing",
+            speed: 'fast',})
+        oppDiv.animate({right: '40%'},
+            {easing: "swing",
+            speed: 'fast'})
+        animationsTest(function(){
+            powImg.css({opacity: '1'});
+            powImg.animate({opacity: '0'});
+            playerDiv.animate({left: '0%'},
+                {easing: "swing",
+                speed: 'fast'})
+            oppDiv.animate({right: '0%'},
+                {easing: "swing",
+                speed: 'fast'})
+        });
+    };
+
+    function animationsTest (callback) {
+        // Test if ANY/ALL page animations are currently active
+    
+        var testAnimationInterval = setInterval(function () {
+            if (! $.timers.length) { // any page animations finished
+                clearInterval(testAnimationInterval);
+                callback();
+            }
+        }, 25);
+    };
 });    

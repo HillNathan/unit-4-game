@@ -89,3 +89,12 @@ button.result {
 .record {
     padding-left: 40px;
 }
+
+#pow {
+    position:absolute;
+    left:50px;
+    height:200px;
+    width:200px;
+    z-index: 10;
+    opacity:0;
+}
