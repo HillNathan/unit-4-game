@@ -31,9 +31,13 @@ img.game-pic {
 }
 
 .card {
-    border: solid 3px black;
+    border: solid 6px black;
     position:relative;
     box-shadow: 5px 10px 8px #333333;
+}
+
+.card-body {
+    background-color: #dddddd;
 }
 
 .stats {
