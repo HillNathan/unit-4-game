@@ -8,26 +8,6 @@ $(document).ready(function() {
         myImage: "assets/images/lion.gif",
         imageClass: "game-pic",
         myDiv: $("#lion-card"),
-    
-        drawMe: function (theChoice) {
-            var newDiv = $("<div>");
-            if (theChoice == "player1") {
-                var myFloat = "float-left";
-                var myID2 = "player1-stats";
-                var myID = "player1";
-            }
-            else {
-                var myFloat = "float-right";
-                var myID2 = "enemy-stats"
-                var myID = "enemy";
-            } 
-
-            newDiv.addClass("card m-2 " + myFloat);
-            newDiv.attr("id", myID);
-            newDiv.append($("<img>").attr("src", this.myImage).addClass("game-pic"));
-            newDiv.append($("<div>").addClass("card-body p-1").html("<h5>Lion</h5><P class='stats mb-0'><span id='" + myID2 + "'></span> HP</P>"));
-            return newDiv;
-        }
     };
     
     var theTiger = {
@@ -37,27 +17,6 @@ $(document).ready(function() {
         myImage: "assets/images/tiger.png",
         imageClass: "game-pic",
         myDiv: $("#tiger-card"),
-    
-        drawMe: function (theChoice) {
-            var newDiv = $("<div>");
-            if (theChoice == "player1") {
-                var myFloat = "float-left";
-                var myID = "player1";
-                var myID2 = "player1-stats";
-            }
-            else {
-                var myFloat = "float-right";
-                var myID = "enemy";
-                var myID2 = "enemy-stats";
-            } 
-
-            newDiv.addClass("card m-2 " + myFloat);
-            newDiv.attr("id", myID);
-            newDiv.append($("<img>").attr("src", this.myImage).addClass("game-pic"));
-            newDiv.append($("<div>").addClass("card-body p-1").html("<h5>Tiger</h5><P class='stats mb-0'><span id='" + myID2 + "'></span> HP</P>"));
-            return newDiv;
-            
-        }
     };
     
     var theBear = {
@@ -67,27 +26,6 @@ $(document).ready(function() {
         myImage: "assets/images/bear.png",
         imageClass: "game-pic",
         myDiv: $("#bear-card"),
-    
-        drawMe: function (theChoice) {
-            var newDiv = $("<div>");
-            if (theChoice == "player1") {
-                var myFloat = "float-left";
-                var myID = "player1";
-                var myID2 = "player1-stats";
-            }
-            else {
-                var myFloat = "float-right";
-                var myID = "enemy";
-                var myID2 = "enemy-stats";
-            } 
-
-            newDiv.addClass("card m-2 " + myFloat);
-            newDiv.attr("id", myID);
-            newDiv.append($("<img>").attr("src", this.myImage).addClass("game-pic"));
-            newDiv.append($("<div>").addClass("card-body p-1").html("<h5>Bear</h5><P class='stats mb-0'><span id='" + myID2 + "'></span> HP</P>"));
-            return newDiv;
-            
-        }
     };
     
     var theFox = {
@@ -97,26 +35,6 @@ $(document).ready(function() {
         myImage: "assets/images/fox.png",
         imageClass: "game-pic",
         myDiv: $("#fox-card"),
-    
-        drawMe: function (theChoice) {
-            var newDiv = $("<div>");
-            if (theChoice == "player1") {
-                var myFloat = "float-left";
-                var myID = "player1";
-                var myID2 = "player1-stats";
-            }
-            else {
-                var myFloat = "float-right";
-                var myID = "enemy";
-                var myID2 = "enemy-stats";
-            } 
-
-            newDiv.addClass("card m-2 " + myFloat);
-            newDiv.attr("id", myID);
-            newDiv.append($("<img>").attr("src", this.myImage).addClass("game-pic"));
-            newDiv.append($("<div>").addClass("card-body p-1").html("<h5>Fox</h5><P class='stats mb-0'><span id='" + myID2 + "'></span> HP</P>"));
-            return newDiv;
-        }
     };
     
     var player1 = {
@@ -206,124 +124,23 @@ $(document).ready(function() {
     player1.displayLosses.text("0");
 
     // Click Listener for the Lion DIV
-    theLion.myDiv.click(function() {
-        console.log("clicked on the lion");
-        //checks if this is being selected for the player or as an enemy
-        if (stage == "initial") {
-            // if we are in the player selection, move to enemy seletion phase and move the selected animal to the
-            // Player area and set the stats for the "Player" object. 
-            stage = "enemy-pick";
-            instructions.text("Now select your opponent by clicking on an animal.");
-            theLion.myDiv.toggle();
-            playerDiv.append(theLion.drawMe("player1"));
-            player1.hitPoints = theLion.hitPoints;
-            player1.initialAttack = theLion.attack;
-            playerHP = $("#player1-stats");
-            playerHP.text(player1.hitPoints);
-        }
-        else if (stage == "enemy-pick") {
-            // if we are in the enemy selection, move to the fighting phase of the game and move the selected anumal
-            // to the enemy area and set the stats for the Enemy object. 
-            stage = "clash";
-            instructions.text("Click the red 'FIGHT' button until you or your opponent's Hit Points are reduced to 0");
-            theLion.myDiv.toggle();
-            oppDiv.append(theLion.drawMe("enemy"));
-            enemy.hitPoints = theLion.hitPoints;
-            enemy.counterAttack = theLion.counterAttack;
-            enemyHP = $("#enemy-stats");
-            enemyHP.text(enemy.hitPoints);
-            fightButton.toggle();
-        }
+    theLion.myDiv.click(function() {        
+        cardClick(theLion);
     });
 
     // Click Listener for the Fox DIV    
     theFox.myDiv.click(function() {
-        console.log("clicked on the fox");
-        // if we are in the player selection, move to enemy seletion phase and move the selected animal to the
-        // Player area and set the stats for the "Player" object.         
-        if (stage == "initial") {
-            stage = "enemy-pick";
-            instructions.text("Now select your opponent by clicking on an animal.");
-            theFox.myDiv.toggle();
-            playerDiv.append(theFox.drawMe("player1"));
-            player1.hitPoints = theFox.hitPoints;
-            player1.initialAttack = theFox.attack;
-            playerHP = $("#player1-stats");
-            playerHP.text(player1.hitPoints);      
-        } 
-        else if (stage == "enemy-pick") {
-            // if we are in the enemy selection, move to the fighting phase of the game and move the selected anumal
-            // to the enemy area and set the stats for the Enemy object. 
-            stage = "clash";
-            instructions.text("Click the red 'FIGHT' button until you or your opponent's Hit Points are reduced to 0");
-            theFox.myDiv.toggle();
-            oppDiv.append(theFox.drawMe("enemy"));
-            enemy.hitPoints = theFox.hitPoints;
-            enemy.counterAttack = theFox.counterAttack;
-            enemyHP = $("#enemy-stats");
-            enemyHP.text(enemy.hitPoints);
-            fightButton.toggle();
-        }
+        cardClick(theFox);
     });    
 
     // Click Listener for the Tiger DIV
     theTiger.myDiv.click(function() {
-        console.log("clicked on the tiger");
-        // if we are in the player selection, move to enemy seletion phase and move the selected animal to the
-        // Player area and set the stats for the "Player" object.               
-        if (stage == "initial") {
-            stage = "enemy-pick";
-            instructions.text("Now select your opponent by clicking on an animal.");
-            theTiger.myDiv.toggle();
-            playerDiv.append(theTiger.drawMe("player1"));
-            player1.hitPoints = theTiger.hitPoints;
-            player1.initialAttack = theTiger.attack;
-            playerHP = $("#player1-stats");
-            playerHP.text(player1.hitPoints);
-        }
-        else if (stage == "enemy-pick") {
-            // if we are in the enemy selection, move to the fighting phase of the game and move the selected anumal
-            // to the enemy area and set the stats for the Enemy object. 
-            stage = "clash";
-            instructions.text("Click the red 'FIGHT' button until you or your opponent's Hit Points are reduced to 0");
-            theTiger.myDiv.toggle();
-            oppDiv.append(theTiger.drawMe("enemy"));
-            enemy.hitPoints = theTiger.hitPoints;
-            enemy.counterAttack = theTiger.counterAttack;
-            enemyHP = $("#enemy-stats");
-            enemyHP.text(enemy.hitPoints);
-            fightButton.toggle();
-        }
+        cardClick(theTiger);
     });
 
     // Click Listener for the Bear DIV
     theBear.myDiv.click(function() {
-        console.log("clicked on the bear");
-        // if we are in the player selection, move to enemy seletion phase and move the selected animal to the
-        // Player area and set the stats for the "Player" object.       
-        if (stage == "initial") {
-            stage = "enemy-pick";
-            instructions.text("Now select your opponent by clicking on an animal.");
-            theBear.myDiv.toggle();
-            playerDiv.append(theBear.drawMe("player1"));
-            player1.hitPoints = theBear.hitPoints;
-            player1.initialAttack = theBear.attack;
-            playerHP = $("#player1-stats");
-            playerHP.text(player1.hitPoints);
-        }
-        else if (stage == "enemy-pick") {
-            // if we are in the enemy selection, move to the fighting phase of the game and move the selected anumal
-            // to the enemy area and set the stats for the Enemy object. 
-            stage = "clash";
-            instructions.text("Click the red 'FIGHT' button until you or your opponent's Hit Points are reduced to 0");
-            theBear.myDiv.toggle();
-            oppDiv.append(theBear.drawMe("enemy"));
-            enemy.hitPoints = theBear.hitPoints;
-            enemy.counterAttack = theBear.counterAttack;
-            enemyHP = $("#enemy-stats");
-            enemyHP.text(enemy.hitPoints);
-            fightButton.toggle();
-        }
+        cardClick(theBear)
     });
 
     // Click event listener for the "fight" button
@@ -417,4 +234,54 @@ $(document).ready(function() {
             }
         }, 25);
     };
+
+    function cardClick(theAnimal){
+        //checks if this is being selected for the player or as an enemy
+        if (stage == "initial") {
+            // if we are in the player selection, move to enemy seletion phase and move the selected animal to the
+            // Player area and set the stats for the "Player" object. 
+            stage = "enemy-pick";
+            instructions.text("Now select your opponent by clicking on an animal.");
+            theAnimal.myDiv.toggle();
+            playerDiv.append(drawCard(theAnimal, "player1"));
+            player1.hitPoints = theAnimal.hitPoints;
+            player1.initialAttack = theAnimal.attack;
+            playerHP = $("#player1-stats");
+            playerHP.text(player1.hitPoints);
+        }
+        else if (stage == "enemy-pick") {
+            // if we are in the enemy selection, move to the fighting phase of the game and move the selected anumal
+            // to the enemy area and set the stats for the Enemy object. 
+            stage = "clash";
+            instructions.text("Click the red 'FIGHT' button until you or your opponent's Hit Points are reduced to 0");
+            theAnimal.myDiv.toggle();
+            oppDiv.append(drawCard(theAnimal, "enemy"));
+            enemy.hitPoints = theAnimal.hitPoints;
+            enemy.counterAttack = theAnimal.counterAttack;
+            enemyHP = $("#enemy-stats");
+            enemyHP.text(enemy.hitPoints);
+            fightButton.toggle();
+        }
+    };
+
+    function drawCard(theObj, theChoice) {
+        var newDiv = $("<div>");
+        if (theChoice == "player1") {
+            var myFloat = "float-left";
+            var myID = "player1";
+            var myID2 = "player1-stats";
+        }
+        else {
+            var myFloat = "float-right";
+            var myID = "enemy";
+            var myID2 = "enemy-stats";
+        } 
+
+        newDiv.addClass("card m-2 " + myFloat);
+        newDiv.attr("id", myID);
+        newDiv.append($("<img>").attr("src", theObj.myImage).addClass("game-pic"));
+        newDiv.append($("<div>").addClass("card-body p-1").html("<h5>Fox</h5><P class='stats mb-0'><span id='" + myID2 + "'></span> HP</P>"));
+        return newDiv;
+    }
+
 });    
