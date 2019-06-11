@@ -198,14 +198,15 @@ $(document).ready(function() {
     });
 
     }); 
-    // restarts the game by reloading the page. This should probably be done a different way, but I will leave this 
-    // here for now until I can get that to work. 
+
+    // Runs the restart function, bringing everything back to square 1
     $(".restart").click(function() {
         restartGame();
         // location.reload();
     });
 
     function fightAnimations(){
+    // Just some fun animations to make it look like the animals are actually fighting
         playerDiv.animate({left: '40%'},
             {easing: "swing",
             speed: 'fast',})
@@ -225,8 +226,8 @@ $(document).ready(function() {
     };
 
     function animationsTest (callback) {
-        // Test if ANY/ALL page animations are currently active
-    
+        // Test if ANY/ALL page animations are currently active, and wait until they are done running
+        // before beginning any of he animations that are included in it.
         var testAnimationInterval = setInterval(function () {
             if (! $.timers.length) { // any page animations finished
                 clearInterval(testAnimationInterval);
@@ -235,6 +236,7 @@ $(document).ready(function() {
         }, 25);
     };
 
+    //Generic function for the card event listener
     function cardClick(theAnimal){
         //checks if this is being selected for the player or as an enemy
         if (stage == "initial") {
@@ -264,6 +266,8 @@ $(document).ready(function() {
         }
     };
 
+    //Generic function for the card drawing method. Takes in the ojbect to be drawn and where the object should go and 
+    // dynamically re-draws the card into a new div and then returns that div to be appended to a parent. 
     function drawCard(theObj, theChoice) {
         var newDiv = $("<div>");
         if (theChoice == "player1") {
