@@ -1,131 +1,87 @@
-
-
 $(document).ready(function() {
-    var theLion = {
-        name: "Lion",
-        hitPoints: 161,
-        attack: 18,
-        counterAttack: 21,
-        myImage: "assets/images/lion.gif",
-        imageClass: "game-pic",
-        myDiv: $("#lion-card"),
-    };
+    function makeAnimal (name, hitPoints, attack, counterAttack, imageName, myDiv) {
+        return {
+            name,
+            hitPoints,
+            attack,
+            counterAttack,
+            myImage: "assets/images/" + imageName,
+            myDiv: $(myDiv)
+        }
+    }
+
+    var theLion = makeAnimal("Lion", 161, 18, 21, "lion.gif", "#lion-card");
+    var theTiger = makeAnimal("Tiger", 163, 19, 20, "tiger.png","#tiger-card");
+    var theBear = makeAnimal("Bear", 159, 20, 22, "bear.png", "#bear-card");
+    var theFox = makeAnimal("Fox", 167, 17, 19, "fox.png", "#fox-card");
     
-    var theTiger = {
-        name: "Tiger",
-        hitPoints: 163,
-        attack: 19,
-        counterAttack: 20,
-        myImage: "assets/images/tiger.png",
-        imageClass: "game-pic",
-        myDiv: $("#tiger-card"),
-    };
-    
-    var theBear = {
-        name: "Bear",
-        hitPoints: 159,
-        attack: 20,
-        counterAttack: 22,
-        myImage: "assets/images/bear.png",
-        imageClass: "game-pic",
-        myDiv: $("#bear-card"),
-    };
-    
-    var theFox = {
-        name: "Fox",
-        hitPoints: 167,
-        attack: 17,
-        counterAttack: 19,
-        myImage: "assets/images/fox.png",
-        imageClass: "game-pic",
-        myDiv: $("#fox-card"),
-    };
-    
-    var player1 = {
-        hitPoints: 0,
-        initialAttack: 0,
-        attack: 0,
+    var gameObj = {
+        enemyCA: 0,         // enemy counterattack
+        enemyHP: 0,         // enemy hitpoints
+        playerHP: 0,        // player hitpoins
+        playerInitial: 0,   // player initial attack
+        attack: 0,          // attack including any increases from previous fights
         numwins: 0,
         gameWins: 0,
+        gameWins: 0,
         gameLosses: 0,
+        stage: "initial",
+        // this var might require some explanation: 
+        // I am using this to control what the click functions do. At different places in the game I want them to do different things. So 
+        // with this variable I can change it when the user clicks through to a different phase of the game, and that then controls what 
+        // the click functions do. 
         displayWins: $(".game-wins"),
-        displayLosses: $(".game-losses")
+        displayLosses: $(".game-losses"),
+        playerHPdiv: "",
+        enemyHPdiv: "",
+        instructions: $("#instructions"),
+        lionHP: $("#lion-stats"),
+        tigerHP: $("#tiger-stats"),
+        foxHP: $("#fox-stats"),
+        bearHP: $("#bear-stats"),
+        fightButton: $(".clash"),
+        winMsg: $("#congrats"),
+        loseMsg: $("#loser"),
+        oppDiv: $("#opp-battle"),
+        playerDiv: $("#user-battle"),
+        powImg: $("#pow"),
+
+        restartGame: function() {
+            this.stage = "initial";
+            this.fightButton.hide();
+            this.winMsg.hide();
+            this.loseMsg.hide();
+            this.instructions.show();
+            this.oppDiv.empty();
+            this.playerDiv.empty();
+            this.lionHP.text(theLion.hitPoints);
+            this.tigerHP.text(theTiger.hitPoints);
+            this.foxHP.text(theFox.hitPoints);
+            this.bearHP.text(theBear.hitPoints);
+            this.playerHPdiv = "";
+            this.enemyHPdiv = "";
+            this.attack = 0;
+            this.playerHP = 0;
+            this.numwins = 0;
+            this.playerInitial = 0;
+            this.instructions.text("Please start by selecting your character:");
+            //
+            theLion.myDiv.show();
+            theFox.myDiv.show();
+            theBear.myDiv.show();
+            theTiger.myDiv.show();
+
+        }
     };
-    
-    var enemy = {
-        hitPoints: 0,
-        counterAttack: 0,
-    };
-    // Declaring some global variables fot displaying information and buttons
-    var instructions = $("#instructions");
-    var lionHP = $("#lion-stats");
-    var tigerHP = $("#tiger-stats");
-    var foxHP = $("#fox-stats");
-    var bearHP = $("#bear-stats");
-    var fightButton = $(".clash");
-    var winMsg = $("#congrats");
-    var loseMsg = $("#loser");
-    var oppDiv = $("#opp-battle");
-    var playerDiv = $("#user-battle");
-    var powImg = $("#pow");
-    // here are variables to show the hit points of the two characters that are fighting right now
-    var playerHP = "";
-    var enemyHP = "";
-
-    var instructions = $("#instructions");
-    var lionHP = $("#lion-stats");
-    var tigerHP = $("#tiger-stats");
-    var foxHP = $("#fox-stats");
-    var bearHP = $("#bear-stats");
-    // here are variables to show the hit points of the two characters that are fighting right now
-    var playerHP = "";
-    var enemyHP = "";
-    
-    
-    var stage = "initial";
-    // this var might require some explanation: 
-    // I am using this to control what the click functions do. At different places in the game I want them to do different things. So 
-    // with this variable I can change it when the user clicks through to a different phase of the game, and that then controls what 
-    // the click functions do. 
-    
-    function restartGame() {
-        stage = "initial";
-        fightButton.hide();
-        winMsg.hide();
-        loseMsg.hide();
-        instructions.show();
-        oppDiv.empty();
-        playerDiv.empty();
-        theLion.myDiv.show();
-        theFox.myDiv.show();
-        theBear.myDiv.show();
-        theTiger.myDiv.show();
-
-        lionHP.text(theLion.hitPoints);
-        tigerHP.text(theTiger.hitPoints);
-        foxHP.text(theFox.hitPoints);
-        bearHP.text(theBear.hitPoints);
-        playerHP = "";
-        enemyHP = "";
-        player1.attack = 0;
-        player1.hitPoints = 0;
-        player1.numwins = 0;
-        player1.initialAttack = 0;
-
-        instructions.text("Please start by selecting your character:");
-        console.log(stage);
-    }
-    
     // Set up some variables to be able to update the hit points as they go down
 
-    console.log(theLion.myDiv)
     // load the initial hit points into the HTML
-    lionHP.text(theLion.hitPoints);
-    tigerHP.text(theTiger.hitPoints);
-    foxHP.text(theFox.hitPoints);
-    bearHP.text(theBear.hitPoints);
-    player1.displayWins.text("0");
-    player1.displayLosses.text("0");
+    gameObj.lionHP.text(theLion.hitPoints);
+    gameObj.tigerHP.text(theTiger.hitPoints);
+    gameObj.foxHP.text(theFox.hitPoints);
+    gameObj.bearHP.text(theBear.hitPoints);
+    gameObj.displayWins.text("0");
+    gameObj.displayLosses.text("0");
 
     // Click Listener for the Lion DIV
     theLion.myDiv.click(function() {        
@@ -148,82 +104,81 @@ $(document).ready(function() {
     });
 
     // Click event listener for the "fight" button
-    fightButton.click(function() {
+    gameObj.fightButton.click(function() {
         //play the fight animation
         fightAnimations()
         // Player does damage to the enemy
 
-            player1.attack = player1.attack + player1.initialAttack
+            gameObj.attack = gameObj.attack + gameObj.playerInitial;
             // Enemy does damage to the player
-            enemy.hitPoints = enemy.hitPoints - player1.attack;
+            gameObj.enemyHP = gameObj.enemyHP - gameObj.attack;
             // Increase the player's attack by the base attack
-            player1.hitPoints = player1.hitPoints - enemy.counterAttack;
+            gameObj.playerHP = gameObj.playerHP - enemyCA;
 
     animationsTest(function () { // <-- this will run once all the above animations are finished
             // Check to see if the player is dead
-            if(player1.hitPoints <1){
-                player1.hitPoints = 0;
-                if(enemy.hitPoints < 1) {
-                    enemy.hitPoints = 0; }
+            if(gameObj.playerHP <1){
+                gameObj.playerHP = 0;
+                if(gameObj.enemyHP < 1) {
+                    gameObj.enemyHP = 0; }
                 // Hide the instructions section and fight button
-                player1.gameLosses++;
-                player1.displayLosses.text(player1.gameLosses);
-                instructions.toggle();
-                fightButton.toggle();
+                gameObj.gameLosses++;
+                gameObj.displayLosses.text(gameObj.gameLosses);
+                gameObj.instructions.toggle();
+                gameObj.fightButton.toggle();
                 // show the button for the lose condition
-                loseMsg.toggle();
+                gameObj.loseMsg.toggle();
             // If the player is NOT dead, check to see if the enemy is dead. 
-            } else if(enemy.hitPoints < 1) {
+            } else if(gameObj.enemyHP < 1) {
                 // if the enemy s dead, mark a win 
-                enemy.hitPoints = 0;
-                player1.numwins++
+                gameObj.enemyHP = 0;
+                gameObj.numwins++
                 // check to see if we have defeated all of the enemies
-                if (player1.numwins == 3) {
+                if (gameObj.numwins == 3) {
                     // if we have won, close out the listening events and display button for the win-condition 
-                    player1.gameWins++;
-                    player1.displayWins.text(player1.gameWins);
-                    stage="game-over";
-                    fightButton.toggle();
-                    instructions.toggle();
-                    winMsg.toggle();
+                    gameObj.gameWins++;
+                    gameObj.displayWins.text(gameObj.gameWins);
+                    gameObj.stage="game-over";
+                    gameObj.fightButton.toggle();
+                    gameObj.instructions.toggle();
+                    gameObj.winMsg.toggle();
                 } else {
                     // if we have not defeated all of the enemies, go back to the selection stage to pick the next
                     // enemy to fight
-                    stage = "enemy-pick";
-                    instructions.text("Now select your opponent by clicking on an animal.");
-                    fightButton.toggle();
+                    gameObj.stage = "enemy-pick";
+                    gameObj.instructions.text("Now select your opponent by clicking on an animal.");
+                    gameObj.fightButton.toggle();
                     $("#enemy").remove();
                 }
             }   
             // If there is no winner or loser, update the hit Points for the player and the enemy and stay in the 
             // fight phase so that the fight button can be clicked again.
-            playerHP.text(player1.hitPoints);
-            enemyHP.text(enemy.hitPoints);
+            gameObj.playerHPdiv.text(gameObj.playerHP);
+            gameObj.enemyHPdiv.text(gameObj.enemyHP);
     });
 
     }); 
 
     // Runs the restart function, bringing everything back to square 1
     $(".restart").click(function() {
-        restartGame();
-        // location.reload();
+        gameObj.restartGame();
     });
 
     function fightAnimations(){
     // Just some fun animations to make it look like the animals are actually fighting
-        playerDiv.animate({left: '40%'},
+        gameObj.playerDiv.animate({left: '40%'},
             {easing: "swing",
             speed: 'fast',})
-        oppDiv.animate({right: '40%'},
+        gameObj.oppDiv.animate({right: '40%'},
             {easing: "swing",
             speed: 'fast'})
         animationsTest(function(){
-            powImg.css({opacity: '1'});
-            powImg.animate({opacity: '0'});
-            playerDiv.animate({left: '0%'},
+            gameObj.powImg.css({opacity: '1'});
+            gameObj.powImg.animate({opacity: '0'});
+            gameObj.playerDiv.animate({left: '0%'},
                 {easing: "swing",
                 speed: 'fast'})
-            oppDiv.animate({right: '0%'},
+            gameObj.oppDiv.animate({right: '0%'},
                 {easing: "swing",
                 speed: 'fast'})
         });
@@ -243,30 +198,30 @@ $(document).ready(function() {
     //Generic function for the card event listener
     function cardClick(theAnimal){
         //checks if this is being selected for the player or as an enemy
-        if (stage == "initial") {
+        if (gameObj.stage == "initial") {
             // if we are in the player selection, move to enemy seletion phase and move the selected animal to the
             // Player area and set the stats for the "Player" object. 
-            stage = "enemy-pick";
-            instructions.text("Now select your opponent by clicking on an animal.");
+            gameObj.stage = "enemy-pick";
+            gameObj.instructions.text("Now select your opponent by clicking on an animal.");
             theAnimal.myDiv.toggle();
-            playerDiv.append(drawCard(theAnimal, "player1"));
-            player1.hitPoints = theAnimal.hitPoints;
-            player1.initialAttack = theAnimal.attack;
-            playerHP = $("#player1-stats");
-            playerHP.text(player1.hitPoints);
+            gameObj.playerDiv.append(drawCard(theAnimal, "player1"));
+            gameObj.playerHP = theAnimal.hitPoints;
+            gameObj.playerInitial = theAnimal.attack;
+            gameObj.playerHPdiv = $("#player1-stats");
+            gameObj.playerHPdiv.text(gameObj.playerHP);
         }
-        else if (stage == "enemy-pick") {
+        else if (gameObj.stage == "enemy-pick") {
             // if we are in the enemy selection, move to the fighting phase of the game and move the selected anumal
             // to the enemy area and set the stats for the Enemy object. 
-            stage = "clash";
-            instructions.text("Click the red 'FIGHT' button until you or your opponent's Hit Points are reduced to 0");
+            gameObj.stage = "clash";
+            gameObj.instructions.text("Click the red 'FIGHT' button until you or your opponent's Hit Points are reduced to 0");
             theAnimal.myDiv.toggle();
-            oppDiv.append(drawCard(theAnimal, "enemy"));
-            enemy.hitPoints = theAnimal.hitPoints;
-            enemy.counterAttack = theAnimal.counterAttack;
-            enemyHP = $("#enemy-stats");
-            enemyHP.text(enemy.hitPoints);
-            fightButton.toggle();
+            gameObj.oppDiv.append(drawCard(theAnimal, "enemy"));
+            gameObj.enemyHP = theAnimal.hitPoints;
+            enemyCA = theAnimal.counterAttack;
+            gameObj.enemyHPdiv = $("#enemy-stats");
+            gameObj.enemyHPdiv.text(gameObj.enemyHP);
+            gameObj.fightButton.toggle();
         }
     };
 
@@ -284,7 +239,6 @@ $(document).ready(function() {
             var myID = "enemy";
             var myID2 = "enemy-stats";
         } 
-
         newDiv.addClass("card m-2 " + myFloat);
         newDiv.attr("id", myID);
         newDiv.append($("<img>").attr("src", theObj.myImage).addClass("game-pic"));
