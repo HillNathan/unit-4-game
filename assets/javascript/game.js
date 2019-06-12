@@ -2,6 +2,7 @@
 
 $(document).ready(function() {
     var theLion = {
+        name: "Lion",
         hitPoints: 161,
         attack: 18,
         counterAttack: 21,
@@ -11,6 +12,7 @@ $(document).ready(function() {
     };
     
     var theTiger = {
+        name: "Tiger",
         hitPoints: 163,
         attack: 19,
         counterAttack: 20,
@@ -20,6 +22,7 @@ $(document).ready(function() {
     };
     
     var theBear = {
+        name: "Bear",
         hitPoints: 159,
         attack: 20,
         counterAttack: 22,
@@ -29,6 +32,7 @@ $(document).ready(function() {
     };
     
     var theFox = {
+        name: "Fox",
         hitPoints: 167,
         attack: 17,
         counterAttack: 19,
@@ -284,7 +288,7 @@ $(document).ready(function() {
         newDiv.addClass("card m-2 " + myFloat);
         newDiv.attr("id", myID);
         newDiv.append($("<img>").attr("src", theObj.myImage).addClass("game-pic"));
-        newDiv.append($("<div>").addClass("card-body p-1").html("<h5>Fox</h5><P class='stats mb-0'><span id='" + myID2 + "'></span> HP</P>"));
+        newDiv.append($("<div>").addClass("card-body p-1").html("<h5>" + theObj.name + "</h5><P class='stats mb-0'><span id='" + myID2 + "'></span> HP</P>"));
         return newDiv;
     }
 
