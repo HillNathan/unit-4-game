@@ -105,6 +105,9 @@ $(document).ready(function() {
 
     // Click event listener for the "fight" button
     gameObj.fightButton.click(function() {
+        //disable the button to prevent multiple clicks
+        gameObj.fightButton.toggle();
+
         //play the fight animation
         fightAnimations()
         // Player does damage to the enemy
@@ -155,6 +158,7 @@ $(document).ready(function() {
             // fight phase so that the fight button can be clicked again.
             gameObj.playerHPdiv.text(gameObj.playerHP);
             gameObj.enemyHPdiv.text(gameObj.enemyHP);
+            gameObj.fightButton.toggle();
     });
 
     }); 
